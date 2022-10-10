@@ -295,17 +295,17 @@ const Index = (props) => {
               <Table className="align-items-center " responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
+                    <th scope="col">Recording</th>
                     <th scope="col">{" "}</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Classification</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3"  health={"Normal"} date={10} />
-                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={10} />
-                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={8} />
-                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={8} />
+                  <Player audioUrl="https://upcdn.io/FW25avz/raw/uploads/2022/10/10/normal__201102201230-3kHY.wav" health={"Normal"} date={10} />
+                  <Player audioUrl="https://upcdn.io/FW25avz/raw/uploads/2022/10/10/normal__201101070538-6wRV.wav" health={"Normal"} date={9} />
+                  <Player audioUrl="https://upcdn.io/FW25avz/raw/uploads/2022/10/10/normal__201101151127-6tLT.wav" health={"Normal"} date={8} />
+                  <Player audioUrl="https://upcdn.io/FW25avz/raw/uploads/2022/10/10/normal__201102081152-2vVv.wav" health={"Normal"} date={8} />
                   
                 </tbody>
               </Table>
