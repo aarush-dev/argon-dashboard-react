@@ -147,7 +147,7 @@ Chart.elements.Rectangle.prototype.draw = function () {
   }
 };
 
-var mode = "light"; //(themeMode) ? themeMode : 'light';
+var mode = "dark"; //(themeMode) ? themeMode : 'light';
 var fonts = {
   base: "Open Sans"
 };
@@ -189,7 +189,7 @@ function chartOptions() {
       global: {
         responsive: true,
         maintainAspectRatio: false,
-        defaultColor: mode === "dark" ? colors.gray[700] : colors.gray[600],
+        defaultColor: colors.white,
         defaultFontColor: mode === "dark" ? colors.gray[700] : colors.gray[600],
         defaultFontFamily: fonts.base,
         defaultFontSize: 13,
@@ -313,13 +313,13 @@ let chartExample1 = {
       yAxes: [
         {
           gridLines: {
-            color: colors.gray[900],
-            zeroLineColor: colors.gray[900]
+            color: colors.gray[100],
+            zeroLineColor: colors.gray[100]
           },
           ticks: {
             callback: function (value) {
               if (!(value % 10)) {
-                return "$" + value + "k";
+                return  + value + "%";
               }
             }
           }
@@ -337,7 +337,7 @@ let chartExample1 = {
             content += label;
           }
 
-          content += "$" + yLabel + "k";
+          content +=  yLabel + "%";
           return content;
         }
       }
@@ -345,22 +345,22 @@ let chartExample1 = {
   },
   data1: (canvas) => {
     return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September","October"],
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
+          data: [76, 71, 66, 71, 80, 67, 75, 78, 80, 82]
         }
       ]
     };
   },
   data2: (canvas) => {
     return {
-      labels: ["May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
       datasets: [
         {
           label: "Performance",
-          data: [0, 20, 5, 25, 10, 30, 15, 40, 40]
+          data: [60,58,67,75]
         }
       ]
     };
@@ -400,11 +400,11 @@ let chartExample2 = {
     }
   },
   data: {
-    labels: ["Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October"],
     datasets: [
       {
         label: "Sales",
-        data: [25, 20, 30, 22, 17, 29],
+        data: [81,90,71,98,97,84,60,99,84,89],
         maxBarThickness: 10
       }
     ]

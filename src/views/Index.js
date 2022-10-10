@@ -15,7 +15,10 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { useState } from "react";
+import WaveSurfer from "wavesurfer.js";
+import { FaPlay, FaUndo, FaRedo } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
+import { useState, useEffect, useRef} from "react";
 // node.js library that concatenates classes (strings)
 import classnames from "classnames";
 // javascipt plugin for creating charts
@@ -47,6 +50,7 @@ import {
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
+import Player from "components/AudioPlayer.js";
 
 const Index = (props) => {
   const [activeNav, setActiveNav] = useState(1);
@@ -61,8 +65,132 @@ const Index = (props) => {
     setActiveNav(index);
     setChartExample1Data("data" + index);
   };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  const waveformRef = useRef();
+  const trackRef = useRef(); // Separated track playing from waveplayer to support bigger audio files
+  const [waveSurfer, setWaveSurfer] = useState(null); // Holds the reference to created wavesurfer object
+
+  const [playingAudio, setPlayingAudio] = useState(false);
+
+
+  const playAudio = () => {
+    if (!props.hideWave)
+      waveSurfer.play();
+    else
+      trackRef.current.play();
+    setPlayingAudio(true);
+  };
+
+  const pauseAudio = () => {
+    if (!props.hideWave)
+      waveSurfer.pause();
+    else
+      trackRef.current.pause();
+    setPlayingAudio(false);
+  };
+
+
+  useEffect(() => {
+    if (waveformRef.current && trackRef.current && !props.hideWave) {
+      const wavesurfer = props.waveStyles
+        ? WaveSurfer.create({
+          ...props.waveStyles,
+          container: "#waveform",
+          
+          responsive: true,
+          backend: "MediaElement",
+          
+
+        })
+        : WaveSurfer.create({
+          container: "#waveform",
+          responsive: true,
+          backend: "MediaElement"
+        });
+      wavesurfer.setHeight(70);
+      wavesurfer.setProgressColor("#f96332");
+      wavesurfer.setCursorColor("#ffffff00")
+      // Load the waveForm json if provided
+      props.waveJson
+        ? wavesurfer.load(trackRef.current)
+        : wavesurfer.load(trackRef.current, props.waveJson);
+
+      wavesurfer.on("ready", () => {
+        setWaveSurfer(wavesurfer);
+        // Returns the instance to call methods on
+        if (typeof props.getWaveSurferInstance === 'function') {
+          props?.getWaveSurferInstance(waveSurfer)
+        }
+        wavesurfer.zoom(props.zoom);
+      });
+
+      if (props?.events) {
+        Object.entries(props.events).map(([key, value]) => {
+          waveSurfer.on(key, value);
+        })
+      }
+    }
+  }, [
+    props.audioUrl,
+    props.hideWave,
+    props.waveStyles,
+    props.waveJson,
+    props.zoom
+  ]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <>
+      {/* <Player
+        audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3"
+        hideImage={true}
+        waveStyles={{
+          cursorWidth: 1,
+          progressColor: "#ee3ec9",
+          responsive: true,
+          waveColor: "#121640",
+          cursorColor: "transparent",
+          barWidth: 0
+        }}
+        {/* zoom={0} */}
+      {/* // waveJson
+      // hideImage="true"
+      // hideWave="true"
+      // containerStyle={}
+      /> */}
       <Header />
       {/* Page content */}
       <Container className="mt--7" fluid>
@@ -75,7 +203,7 @@ const Index = (props) => {
                     <h6 className="text-uppercase text-light ls-1 mb-1">
                       Overview
                     </h6>
-                    <h2 className="text-white mb-0">Sales value</h2>
+                    <h2 className="text-white mb-0">Heart Health</h2>
                   </div>
                   <div className="col">
                     <Nav className="justify-content-end" pills>
@@ -128,7 +256,7 @@ const Index = (props) => {
                     <h6 className="text-uppercase text-muted ls-1 mb-1">
                       Performance
                     </h6>
-                    <h2 className="mb-0">Total orders</h2>
+                    <h2 className="mb-0">Average Heart Rate</h2>
                   </div>
                 </Row>
               </CardHeader>
@@ -145,18 +273,18 @@ const Index = (props) => {
           </Col>
         </Row>
         <Row className="mt-5">
-          <Col className="mb-5 mb-xl-0" xl="8">
+          <Col className="mb-5 mb-xl-0" xl="12">
             <Card className="shadow">
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Page visits</h3>
+                    <h3 className="mb-0">Recent Recordings</h3>
                   </div>
                   <div className="col text-right">
                     <Button
                       color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      href="/admin/recordings"
+                      // onClick={(e) => e.preventDefault()}
                       size="sm"
                     >
                       See all
@@ -164,170 +292,27 @@ const Index = (props) => {
                   </div>
                 </Row>
               </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
+              <Table className="align-items-center " responsive>
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
+                    <th scope="col">{" "}</th>
                     <th scope="col">Unique users</th>
                     <th scope="col">Bounce rate</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/index.html</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/charts.html</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/tables.html</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/profile.html</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
+                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3"  health={"Normal"} date={10} />
+                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={10} />
+                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={8} />
+                  <Player audioUrl="https://www.mfiles.co.uk/mp3-downloads/gs-cd-track2.mp3" health={"Normal"} date={8} />
+                  
                 </tbody>
               </Table>
             </Card>
           </Col>
           <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="border-0">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h3 className="mb-0">Social traffic</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
-                  </div>
-                </Row>
-              </CardHeader>
-              <Table className="align-items-center table-flush" responsive>
-                <thead className="thead-light">
-                  <tr>
-                    <th scope="col">Referral</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col" />
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>1,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">60%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="60"
-                            barClassName="bg-gradient-danger"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Facebook</th>
-                    <td>5,480</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">70%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="70"
-                            barClassName="bg-gradient-success"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Google</th>
-                    <td>4,807</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">80%</span>
-                        <div>
-                          <Progress max="100" value="80" />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Instagram</th>
-                    <td>3,678</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">75%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="75"
-                            barClassName="bg-gradient-info"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">twitter</th>
-                    <td>2,645</td>
-                    <td>
-                      <div className="d-flex align-items-center">
-                        <span className="mr-2">30%</span>
-                        <div>
-                          <Progress
-                            max="100"
-                            value="30"
-                            barClassName="bg-gradient-warning"
-                          />
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card>
+            
           </Col>
         </Row>
       </Container>
