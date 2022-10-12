@@ -23,10 +23,11 @@ import { Container, Row, Col } from "reactstrap";
 // core components
 import AuthNavbar from "components/Navbars/AuthNavbar.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
-
+import disableScroll from 'disable-scroll';
 import routes from "routes.js";
 
 const Auth = (props) => {
+  disableScroll.on();
   const mainContent = React.useRef(null);
   const location = useLocation();
 
@@ -67,7 +68,7 @@ const Auth = (props) => {
             <div className="header-body text-center mb-8">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
+                  <h1 className="text-white ">Welcome!</h1>
                   <p className="text-lead text-light">
 
 
@@ -99,7 +100,7 @@ const Auth = (props) => {
           </div>
         </div>
         {/* Page content */}
-        <Container className="mt--8 pb-5">
+        <Container className="mt--8 pb-9">
           <Row className="justify-content-center">
             <Switch>
               {getRoutes(routes)}

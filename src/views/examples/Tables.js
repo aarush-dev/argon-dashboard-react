@@ -172,7 +172,7 @@ const Tables = () => {
 
 
   return (
-    <>
+    <div className="overflow-hidden">
 
       <Header />
       {/* Page content */}
@@ -190,7 +190,7 @@ const Tables = () => {
 
                   </div>
                   <div className="col">
-                    <div className="col text-right">
+                    <div className="col text-right overflow-hidden">
                       
                           {/* <Button
                             color="primary"
@@ -230,7 +230,7 @@ const Tables = () => {
                     <th scope="col">Classification</th>
                   </tr>
                 </thead>
-                <tbody className="overscroll-none">
+                <tbody className="overscroll-none overflow-hidden">
                   {/* TODO:*/}
                   {data.slice(0, 7).map((item)=>{
                     return(
@@ -297,7 +297,7 @@ const Tables = () => {
         </Row>
 
       </Container>
-    </>
+    </div>
   );
 };
 
