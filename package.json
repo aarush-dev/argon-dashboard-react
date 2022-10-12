@@ -49,6 +49,7 @@
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",
     "classnames": "2.3.1",
+    "disable-scroll": "^0.6.0",
     "moment": "2.29.4",
     "nouislider": "15.2.0",
     "react": ">=16.0.0",
@@ -70,7 +71,8 @@
   },
   "devDependencies": {
     "gulp": "4.0.2",
-    "gulp-append-prepend": "1.0.9"
+    "gulp-append-prepend": "1.0.9",
+    "prettier": "2.7.1"
   },
   "peerDependencies": {
     "react": ">=16.0.0",
