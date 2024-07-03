@@ -45,6 +45,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.3",
     "@pandemicode/material-ui-dropzone": "^3.5.5",
+    "ajv-keywords": "^5.1.0",
     "audio-react-recorder": "^1.0.4",
     "bootstrap": "4.6.0",
     "chart.js": "2.9.4",
@@ -70,6 +71,7 @@
     "wavesurfer.js": "^6.3.0"
   },
   "devDependencies": {
+    "ajv": "^7.2.4",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
     "prettier": "2.7.1"

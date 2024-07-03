@@ -77,28 +77,29 @@ const Tables = () => {
 
   const uploader = new Uploader({
     // Get production API keys from Upload.io
-    apiKey: "public_FW25avzE9QCmQkerdWpGv5vP533G"
+    apiKey: "public_12a1z2CGBTHcL9mAmpNUJzW8QT2n"
   });
   // get the first letter of the file uploaded
   const uploadHandler = (files) => {
     console.log(files);
+    console.log(files[0].originalFile.file.name.charAt(0));
     // setList(files[0].fileUrl);
-    if (files[0].originalFile.originalFileName.charAt(0) == "a" || files[0].originalFile.originalFileName.charAt(0) == "A") { 
+    if (files[0].originalFile.file.name.charAt(0) == "a" || files[0].originalFile.file.name.charAt(0) == "A") { 
       setdata([{ url: files[0].fileUrl, health: "Artifact", date: 12 },...data]);
       console.log(data);
       ;
     }//do same for other conditions
-    else if (files[0].originalFile.originalFileName.charAt(0) == "m" || files[0].originalFile.originalFileName.charAt(0) == "M") {
+    else if (files[0].originalFile.file.name.charAt(0) == "m" || files[0].originalFile.file.name.charAt(0) == "M") {
       setdata([{ url: files[0].fileUrl, health: "Murmur", date: 12 },...data]);
       console.log(data);
       ;
     }
-    else if (files[0].originalFile.originalFileName.charAt(0) == "n" || files[0].originalFile.originalFileName.charAt(0) == "N" || files[0].originalFile.originalFileName.charAt(0) == "R" || files[0].originalFile.originalFileName.charAt(0) == "r") {
+    else if (files[0].originalFile.file.name.charAt(0) == "n" || files[0].originalFile.file.name.charAt(0) == "N" || files[0].originalFile.file.name.charAt(0) == "R" || files[0].originalFile.file.name.charAt(0) == "r") {
       setdata([{ url: files[0].fileUrl, health: "Normal", date: 12 },...data]);
       console.log(data);
       ;
     }
-    else if (files[0].originalFile.originalFileName.charAt(0) == "e" || files[0].originalFile.originalFileName.charAt(0) == "E") {
+    else if (files[0].originalFile.file.name.charAt(0) == "e" || files[0].originalFile.file.name.charAt(0) == "E") {
       setdata([{ url: files[0].fileUrl, health: "ExtraHLS", date: 12 },...data]);
       console.log(data);
       ;
@@ -106,9 +107,9 @@ const Tables = () => {
     else {
       alert("Please upload a valid file");
     }
-    // if (files[0].originalFile.originalFileName.charAt(0) == "m" || files[0].originalFile.originalFileName.charAt(0) == "M"){setmurmur(true);setmurmurUrl(files[0].fileUrl)}
-    // if (files[0].originalFile.originalFileName.charAt(0) == "e" || files[0].originalFile.originalFileName.charAt(0) == "E"){setExtrahls(true);setextrahlsUrl(files[0].fileUrl)}
-    // if (files[0].originalFile.originalFileName.charAt(0) == "n" || files[0].originalFile.originalFileName.charAt(0) == "N"){setnormal(true);setnormalUrl(files[0].fileUrl)}
+    // if (files[0].originalFile.file.name.charAt(0) == "m" || files[0].originalFile.file.name.charAt(0) == "M"){setmurmur(true);setmurmurUrl(files[0].fileUrl)}
+    // if (files[0].originalFile.file.name.charAt(0) == "e" || files[0].originalFile.file.name.charAt(0) == "E"){setExtrahls(true);setextrahlsUrl(files[0].fileUrl)}
+    // if (files[0].originalFile.file.name.charAt(0) == "n" || files[0].originalFile.file.name.charAt(0) == "N"){setnormal(true);setnormalUrl(files[0].fileUrl)}
     // console.log(uploadded+" "+murmur+" "+normal+" "+artifact+" "+extrahls)
 
     // [
@@ -234,7 +235,7 @@ const Tables = () => {
                   {/* TODO:*/}
                   {data.slice(0, 7).map((item)=>{
                     return(
-                      <Player audioUrl={item.url} health={item.health} key={item} date={item.date} />
+                      <Player audioUrl={item.url} health={item.health} key={item.url} date={item.date} />
                     )
                     
                   })}

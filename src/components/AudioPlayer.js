@@ -53,19 +53,27 @@ export default function Player(props) {
                     props?.getWaveSurferInstance(waveSurfer)
                 }
                 
-            waveSurfer.on("finish", () => {
-                setPlayingAudio(false);
-            });
+            
+                
             
 
 
+            }); 
+            wavesurfer.on("finish", () => {
+                setPlayingAudio(false);
+                wavesurfer.setCurrentTime(0)
             });
-
+                
             if (props?.events) {
                 Object.entries(props.events).map(([key, value]) => {
                     waveSurfer.on(key, value);
                 })
+                
             }
+
+            
+            // setPlayingAudio(false);
+            
         }
     }, [
         props.audioUrl,
